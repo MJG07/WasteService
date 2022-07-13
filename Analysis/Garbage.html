@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <!--
+<link rel="stylesheet" type="text/css" href="../css/issStyle1.css">
+<script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+<style type="text/css">
+body
+{
+    margin-left:  30px;
+    margin-right: 30px;
+};
+
+P
+{
+    font-family: Tahoma;
+    font-size: 10pt;
+};
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+	font-size: 93%;
+}
+
+a:hover {
+    background-color: #cccccc;
+}
+
+
+hr {
+    clear: both;
+    height: 1px;
+    color: #242424;
+    background-color: transparent;
+}
+
+h1, h2, h3 {
+    color: #242424;
+    clear: left;
+    font: 100% Tahoma, Helvetica, Arial, sans-serif;
+    margin-bottom: 0.5em;
+    padding-top: 0.5em;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+top {
+	width: 100%;
+}
+
+
+#i {
+    color: #ff1010;
+}
+tt{
+	font-family: "Arial";
+    font-size: 90%;
+	color: #006600;
+}
+em{
+	font-family: "Arial";
+    font-size: 80%;
+	font-weight: bold;
+	border-style:solid;
+	border-color: #abe876;
+    color: #1632cc;
+}
+bc{
+	font-family: "Arial";
+	font-size: 90%;
+	font-weight: bold;
+    color: #990000;
+	background-color: #fcf8c7;
+}
+ks{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #0000CD	;
+	font-size: 90%;
+}
+kc{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #008000	;
+	font-size: 90%;
+}
+pre{
+	font-family: "Consolas";
+	font-size: 85%;
+	background-color: #f5f5f5;
+	border: 1.5px solid silver;
+	padding: 5px;
+}
+m{
+	font-family: "Helvetica";
+	line-height: 100%;
+ 	font-size: 75%;
+}
+div.body{
+	 
+    font-size: 18px;
+}
+k{
+    color: #990000;
+	font-weight: bold;
+	font-size: 90%;
+}
+h1 {
+    font-size: 150%;
+    background-color: #b2c0ff;
+	padding: 10px;
+}
+
+h2 {
+    background-color: #9ed8ff;
+    font-size: 130%;
+}
+
+h3 {
+	background-color: #e6ccff;
+    font-size: 100%;
+}
+h4 {
+    background-color: #ccffcc;
+    font-size: 100%;
+	width: 95%;
+	border-radius: 5px;
+	padding: 2px;
+}
+h5 {
+    background-color: #d5ffb0;
+    font-size: 100%;
+
+}
+div.req{
+	background-color: #d9ffb3;
+    font-size: 18px;
+	width: 700px;
+    border: 3px solid green;
+    padding: 15px;
+    margin: 10px;
+}
+div.remark{
+	background-color: #E3F2FD;
+    border: 1.5px solid #d5f2ed;
+    padding: 15px;
+    margin: 10px;
+	border-radius: 25px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+ol, ul, li {
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  padding-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+img {
+	border: 1.5px solid #d5f2ed;
+    
+
+}
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+}
+
+div.wrapdesc{
+	width: 90%;
+	margin: auto;
+}
+
+div.imagedesc{
+	width: 85%;
+	margin: auto;
+}
+</style>
+    
+<head>
+   
+<title>Garbage Robot</title></head>
+    
+<body>
+<div id="top">
+<h1>Compito Finale ISS-2022: WasteService </h1>
+</div>  
+
+<div class="body"> 
+    <h2>Introduction</h2>
+    <div class="remark">
+    <h3>Progetto redatto da Garofalo Mirko e Palazzolo Alessandro sulla simulazione di un Robot smista rifiuti.</h3>
+    </div>
+ 
+    <h2>Requirements</h2>
+   
+    <div class="remark">
+        <h3>Automatic Garbage Storage</h3>
+        Una compagnia intende costruire un WasteService per separare limmondizia raccolta, composto da un set di elementi: <br>
+        1. un area di servizio (rettangolare, piatta) che include: <br>
+            <ul>
+                <li>una porta <em>INDOOR</em>, dove entra l'immondizia</li>
+                <li>un conteiner <em>PlasticBox</em>, che ha l'obiettivo di raccogliere gli oggetti plastica, fino a un MAXPB kg</li>
+                <li>un conteiner <em>GlassBox</em>, che ha l'obiettivo di raccogliere gli oggetti vetro, fino a un MAXGB kg</li>
+            </ul> <br>
+        L'area di servizio è libera da ostracoli interni, e si mostra come l'immagine che segue: <br>
+        <img src="./img/WasteServiceRoom.PNG" width="45%" height="32%" ><br>
+        2. Un robot DDR che funge da carrello di trasporto, che inizialmente è situato nella sua posizione di <em>HOME</em>. Questo carrello di trasporto ha la forma di un quadrato di lunghezza laterale RD <br>
+        3. Un <em>Service-manager</em>(un essere umano) che supervisiona lo stato dell'area di servizio utilizzando una <em>WasteServiceStatusGUI</em> <br>
+        4. Un <em>Sonar</em> e un <em>Led</em> collegati ad un RaspberryPy. Il led verrà usato come dispositivo di segnalazione, il sonar invece come dispositivo di allarme.<br>
+        <h3>Requirement</h3>
+        <h4>L'obiettivo del WASTESERVICE software è quello di permettere a un <i>camion dei rifiuti</i>  di depositare il prorio <i>TruckLoad</i>(kg) o di plastica o vetro nel container giusto(<i>PasticBOX,GlassBOX</i>).
+            La simulazione può essere descritta come segue: </h4>
+      
+            <ul>
+                <li>Il <i>camion dei rifiuti</i> approccia <i>INDOOR</i> area e manda (mediante uno "Smart Device") una richiesta di
+                    di depositare il carico, specificando il tipo del materiale (plastica o vetro) e il suo <i>TruckLoad</i> .</li>
+                <li>Il WASTESERVICE manda una risposta di <i>loadaccept</i> se il contenuto del finale del container giusto 
+                    non sorpassa il valore massimo consentito (MAXPB or MAXGB). Altrimenti manda una risposta di <i>loadrejecetd</i>
+                    e il <i>camion dei rifiuti</i>  lascia l'<i>INDOOR</i>  area.</li>
+                <li>Quando il carico è accettato, il transport trolley ragiunge l'<i>INDOOR</i> , prende il materiale,
+                    va al giusto container e deposita il materiale. Durante il WASTESERVICE il Led lampeggia.</li>
+                <li>Quando l'azione di deposito è terminata, il transport trolley esegue un altro comando di deposito (se ce ne sono) o ritorna a casa.</li>
+            </ul>
+        
+
+        <h4>Il WasteService deve creare una <i>WasteServiceStatusGUI</i> che permette al Service-manager di vedere:</h4>
+
+         
+            <ul>
+                <li>Lo stato corrente del transport trolley e il suo posizionamento nella stanza.</li>
+                <li>Il peso corrente dei materiali presenti nei due container dei rifiuti.</li>
+                <li>Lo stato corrente del Led.</li>
+            </ul>
+        
+
+    </div>
+
+ 
+
+    <h2>Requirement analysis</h2>
+
+    <div class="remark">
+        <h4> Dizionario</h4>
+       
+            <ul>
+                <li> <i> Transport Trolley</i> : un DDR robot che ha come obbiettivo di trasportare il TruckLoad.</li>
+                <li> <i> TruckLoad</i> : Quantitativo di spazzatura trasportata dal camion di rifiuti.</li>
+                <li> <i> TruckType</i> : Tipologia della spazzatura(plastica o vetro).</li>
+                <li> <i>INDOOR</i> : zona di ingresso dei camion dei rifiuti.</li>
+                <li> <i>GlassBox</i> : zona di deposito del vetro.</li>
+                <li> <i>PlasticBox</i> : zona di deposito della plaastica.</li>
+                <li> <i>MAXPB</i>: Massimo peso della spazzatura che il container di plastica può depositare.</li>
+                <li> <i>MAXGB</i>: Massimo peso della spazzatura che il container di vetro può depositare.</li>
+                <li> <i>LoadAccept</i>: risposta positiva alla richiesta di deposito del carico del camion dei rifiuti.</li>
+                <li> <i>LoadRejected</i>: risposta negativa alla richiesta di deposito del carico del camion dei rifiuti.</li>
+            </ul>
+        
+        <h3> software e hardware forniti</h3>
+        <h4>Il Transport Trolley</h4>
+        <p>Il <em>Trolley</em> è un robot ad azionamento diretto compatibile in termini di iterazione e comportamento con l'ambiente virtuale <k>Wenv</k> fornito dal committente</p>
+        <p>Poichè ogni posizione nella nostra <em>aerea di servizio</em> è espressa come multiplo del lato RD del nostro <em>Trolley</em>, la comunicazione con il robot dovrebbe seguire la convenzione <k>aril(Abstract Robot Interaction Lanaguage).</k></p>
+        
+        <h4>L'area di Servizio e i suoi punti di interesse</h4>
+        <p>Il committente ha fornito una foto della nostra area di servizio, dove mostra le zone principali della mappa. Per ricrearla, come detto prima, possiamo usare l'ambiente virtuale <k>Wenv</k> e dopodichè dovremo far conoscere al nostro <k>Trolley</k> la stanza. Per far ciò possiamo ricorrrere ad uno strumento in nostro possesso chiamanto <k>Mapper</k>, che è in grado di guidare un robot all'interno di una stanza e fargli creare una <k>mappa</k> di essa.</p>
+        <p>Tale mappa creata, è parzialmente compatibile con uno strumento disponibile in nostro possesso chiamato <k>planner22Util</k>, che è in grado di pianificare il percorso per guidare un robot in punto specifico evitando eventuali ostacoli sul suo cammino.Tale strumento richiedere che la <k>mappa</k> sia in <k>formato binario</k>. 
+
+        <p>Tutti i punti della nostra area di servizio possono essere rappresentate come coppie di coordinate sulla mappa. Per una maggiore rappresentazione della posizione, non useremo coppie di coordinate ma una tripla di coordinate, che oltre la posizione (X e Y), ci fornirà anche l'orientamento del nostro <em>Trolley</em>.</p>
+        <p>L'unica posizione che possiamo definire è la posizione di Home, le altre cambieranno in base alla grandezza dell'area di servizio </p>
+        <pre>
+            Home:  [0, 0, S]
+        </pre>
+        <p>Per definire meglio la posizione, il nostro <k>Planner22Util</k> dovrebbe essere ampliato con un nuovo componente per aggiungere la funzionalità di pianificazione  dell'orientamento desiderato del Trolley accanto la posizione desiderata</p>
+        
+        <h4>Sonar e Led</h4>
+        <p>Il committente ha dichiarato che il <em>Sonar</em> deve misurare la <k>Distanza</k> che registra durante i movimenti del Trolley e nel caso legga una distanza minore di un DLIMT il Trolley deve fermarsi.Per quanto Riguarda il <em>Led</em> esso dovrà lampeggiare nel caso in cui il Trolley sia in movimento e dovrà rimanere accesso in caso il Trolley sia fermo al di fuori della Home, altrimenti il Led sarà spento. Il committente fornisce i codici per il funzionamento sia del <em>Sonar</em> che del <em>Led</em></p>
+        <p>Il Sonar dovrebbero essere in qualchè una<em>Entità interrogabile</em> per sapere se sta rilevando o meno una presenza. Dovrebbero anche essere inseriti dietro una sorta di <k>interfaccia</k></p>
+        <p>Per quanto riguarda il <k>Sonar</k>visto che è un componente fisico, verrà usato un HC-SR04(sensore di distanza) montato sun un RaspBerry Py. Oltre al Sonar, verrà montato anche un <k>Led</k>.</p>
+
+        <h4>WasteServiceStatusGUI e ClientGarbageRobotGui</h4>
+        <p>La <k>ClientGarbageRobotGui</k> e la <k>WasteServiceStatusGUI</k> devono essere fornite dal nostro WasteService </p>
+        <p>Il committente ha inteso che le due GUI debbano essere entità in grado di funzionare su molti dispositivi. Probabilmente è meglio se esse siano proggettate come <k>Web GUI</k></p>
+
+        <h3>Users Stories</h3>
+        <k><em>Camionista dei rifiuti:</em></k>
+        <p>Arrivando all'Indoor, il camionista comunica ,<k>tramite un dispositivo smart</k>,il suo interesse nel depositare il carico, specificando la tipologia del materiale che vuole depositare e il suo TruckLoad.</p>
+        <p>Se:</p>
+        <ul>
+            <li><p>il carico che vuole lasciare sommato al carico già presente nei box(PE o GB) supera il valore massimo consentito (MAXPB o MAXGB), il camion dei rifiuti riceve una risposta negativa alla sua richiesta.</p> </li>
+            <li><p>Il carico che vuole lasciare sommato al carico già presente nei box(PE o GB) non supera il valore massimo consentito (MAXPB o MAXGB),il camion dei rifiuti deposita i rifiuti all'interno e se ne va.</p></li>
+        </ul>
+
+        <k><em>Service-manager </em></k>
+        <p>Intende usare la WasteServiceStatusGUI, fornita dal WasteService per osservare lo stato attuale del robot, per vedere la sua posizione e vedere lo stato della GlassBox e della PlasticBox.Inoltre ha la possibilità di vedere se il robot si sta muovendo</p>
+
+    </div>
+
+
+
+    <h2>Problem analysis</h2>
+
+    <div class="remark">
+
+        <h3>Aspetti Rilevanti</h3>
+
+        <ol>
+            <li>Il sistema da realizzare sarà un sistema distribuito, composto da più macro-componenti:</li>
+            <ul>
+                <li>Il <k>carrello di trasporto(Transport Trolley)</k></li>
+                <li>Il <k>Sonar</k></li>
+                <li>Il <k>Led</k></li>
+                <li>I nostri <k>applicativi</k>(WasteService, completo di due GUI), che invia i comandi al carrello per soddisfare i requisiti</li>
+            </ul>
+
+            <li>Questo sistema distribuito che vogliamo realizzare è composto da più componenti eterogenee, potrebbe trarre grandi benefici da un framework basato su attori con supporto per l'interazione di passaggio di messaggi. A tal fine, possiamo sfruttare il <k>meta-modello QAK</k> per costruire modelli eseguibili. Con questa possibilità però, ci troviamo davanti un divario di astrazione per quanto riguardi l'uso dei linguaggi, perchè QAK si basa su Java e Kotlin.Tuttavia, QAK stesso riesce a colmare gran parte di questa limitazione, in quanto viene fornito con un proprio linguaggio specifico e inoltre perchè il AQK è stato progettati specificatamente per sistemi distribuiti eterogenei</li>
+            <li>Il <k>meta-modello QAK</k> fornisce compatibilità con i protocolli di comunicazione MQTT,COAP e TCP, ugualmente valido per l'iterazione tra attori. Per quanto riguarda la comunicazione con il Wenv(o altri Trolley compatibili), entrambi i modelli di iterazione supportati(quali WebSocket, Post e HTTP) sono idonei al compito da svolgere</li>
+            <li>Useremo la seguente <em>leggenda</em> per gli schemi che realizzeremo nel documento:</li>
+            <center>
+                <img src="./img/legenda.png" width="30%" height="15%"  ><br>
+            </center>
+        </ol>
+
+        <h3>Architettura Logica</h3>
+        <p>Ogni componente logico dovrebbe essere modellato come un attore come espresso dalla seguente architettura generale:</p>
+        <center>
+            <img src="./img/schema Logico.png"  width="45%" height="32%" ><br>
+        </center>
+
+        <h4>Buinsess Logic</h4>
+        <center>
+            <img src="./img/buisnessLogic.png"  width="45%" height="32%" ><br>
+        </center>
+        <p>La logica della buisness logic può essere descritta come una macchina a stati finiti che racchiude un attore vero e proprio.Questo attore controlla la stato principale della nosta applicazione e presenta un comportamento reattivo.</p>
+        <p>Il "goto" viene consegnato ad una entità che sia in grado di eseguire l'insieme implicto di azioni elementari del nostro Trolley.</p>
+
+        <h4>Le interfacce Utente (GUI)</h4>
+        <p> Il WasteService è composto da 2 Gui: la WasteServiceStatusGUI, utilizzata dal manager-service e la ClientGarbageRobotGui, utilizzata dal guidatore del camion dei rifiuti.Entrambe le gui devono essere controllate da due attori diversi ed indipendenti perchè potrebbero non essere messe sullo stesso nodo della buisness logic.</p>
+        <center>
+            <img src="./img/GuiActor.png"  width="45%" height="32%" ><br>
+        </center>
+        <p>Adesso analizziamo nel dettaglio le Gui, partendo dalla WasteServiceStatusGUI</p>
+        <p> La <k>WasteServiceStatusGUI</k> ha: </p>
+        <ol>
+            <li> <p>Una <k>Mappa</k>, necessaria al Manager per capire dov'è arrivato il robot.</p></li>
+            <li> <p>Due <K>TextBox</K> in cui saranno presenti i quantitativi di plastica/vetro all'interno dei container</p></li>
+            <li> <p>Un check per quanto riguardo lo stato del Led(si proverà a simulare il led)</p></li>
+    
+        </ol>
+        <center>
+            <img src="./img/Untitled_Diagram.drawio_1.png"  width="45%" height="32%" ><br>
+        </center>
+        <P>Per quanto riguarda invece la <k>ClientGarbageRobotGu</k> ha :</P>
+        <ol>
+            <li> <p>Una <k>TextBox Modificabile</k>, necessaria al camionista per inserire il trackload.</p></li>
+            <li> <p>Due <K>CheckBox</K>, necessaria al camionista per dire che tipo di materiale sta introducendo</p></li>
+            <li> <p>Una <K>textBox non modificabile</K> che darà l'eseito della richiesta (può depositare/non può depositare)</p></li>
+        </ol>
+        <center>
+            <img src="./img/Untitled_Diagram.drawio.png"  width="45%" height="32%" ><br>
+        </center>
+
+        <h4>I movimenti del Trolley</h4>
+        <p>Per accedere al Wenv, è giusto considerare l'utilizzo di uno strumento più sofisticato che abbiamo a disposizione, denominato basicRobot, che sarebbe in grado di evitare interferenze tra comandi sovrapposti e di ricevere ordini di movimento espressi come passi.Un  nuovo servizio, denominato RobotProxy, potrebbe essere necessario per garantire la compatibilità tra il sistema in uso e il basicRobot.</p>
+        <center>
+            <img src="./img/trolley_driving.png"  width="45%" height="32%" ><br>
+        </center>
+        <p>Il WEnv usa un "paradigma di comunicazione" richiesta-risposta. Anche se alcuni passaggi intermedi protrebbero favorire approcci diversi, la risposta del WEnv va sempre ricondotta all'attore che ha creato le relative richieste.</p>
+    </div>
+            
+    <!-- USEFUL
+    <table style="width:100%" border="1">
+    <tr>
+    <td style="width:50%">
+    </td>
+    <td></td>
+    </tr>
+    </table>
+    -->
+                
+    <br/><br/> 	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+<p>By Mirko Garofalo e Alessandro Palazzolo</p>
+email: mirko.garofalo@studio.unibo.it - alessandro.palazzolo@studio.unibo.it  
+<center>
+<img src="./img/mirko.PNG" alt="mbot" width="16%" height="15%">
+<img src="./img/alessandro.png" alt="mbot" width="15%" height="15%">
+</center>
+
+</div> 
+</body>
+</html>
