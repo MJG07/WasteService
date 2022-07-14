@@ -255,7 +255,7 @@ div.imagedesc{
         <h4> Dizionario</h4>
        
             <ul>
-                <li> <i> Transport Trolley</i> : un DDR robot che ha come obbiettivo di trasportare il TruckLoad da una parte ad un'altra della nostra <em>Zona di servizio</em>. Formalizzazione: <a href="#Trolley" >Trolley</a> </li>
+                <li> <i> Transport Trolley</i> :  un robot quadrato di lato RD in grado di prelevare il TruckLoad da un camion e portarlo da una parte ad un'altra della nostra <em>Zona di servizio</em>. Formalizzazione: <a href="#Trolley" >Trolley</a> </li>
                 <li> <i> TruckLoad</i> : Quantitativo di spazzatura trasportata dal camion di rifiuti.</li>
                 <li> <i> TruckType</i> : Tipologia della spazzatura(plastica o vetro).</li>
                 <li> <i>MAXPB</i>: Massimo peso della spazzatura che il container di plastica può depositare.</li>
@@ -268,7 +268,7 @@ div.imagedesc{
         <h4>Il Transport Trolley</h4>
         <p>Il <em>Trolley</em> è un robot ad azionamento diretto compatibile in termini di iterazione e comportamento con l'ambiente virtuale <k>Wenv</k> fornito dal committente</p>
         <p>La comunicazione con il robot dovrebbe seguire la convenzione <a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/anatali/issLab2021/main/it.unibo.boundaryWalk/userDocs/BoundaryWalk.html#aril"><k>aril(Abstract Robot Interaction Lanaguage).</k></a></p>
-        <p>Per quanto riguarda la stanza, la grandezza?Le coordinate? come identifichiamo le Porte?</p>
+        <p><k>Per quanto riguarda la stanza, la grandezza?Le coordinate? come identifichiamo le Porte?</k></p>
         
         <h4>Sonar e Led</h4>
         <p>Il committente ha dichiarato che il <em>Sonar</em> deve misurare la <k>Distanza</k> che registra durante i movimenti del Trolley e nel caso legga una distanza minore di un DLIMT il Trolley deve fermarsi.Per quanto Riguarda il <em>Led</em> esso dovrà lampeggiare nel caso in cui il Trolley sia in movimento e dovrà rimanere accesso in caso il Trolley sia fermo al di fuori della Home, altrimenti il Led sarà spento. Il committente fornisce i codici per il funzionamento sia del <em>Sonar</em> che del <em>Led</em></p>
@@ -337,7 +337,7 @@ div.imagedesc{
             GLASSBOX: [X,0]
         </pre>
         <p>Per una maggiore rappresentazione della posizione, non useremo coppie di coordinate ma una tripla di coordinate, che oltre la posizione (X e Y), ci fornirà anche l'orientamento del nostro <em>Trolley</em>.</p>
-        <p>Per definire meglio la posizione, il nostro <k>Planner22Util</k> dovrebbe essere ampliato con un nuovo componente per aggiungere la funzionalità di pianificazione  dell'orientamento desiderato del Trolley accanto la posizione desiderata: <k>PlannerUtil</k></p>
+        <p>Per definire meglio la posizione, il nostro <k>Planner22Util</k> dovrebbe essere ampliato con un nuovo componente per aggiungere la funzionalità di pianificazione  dell'orientamento desiderato del Trolley accanto la posizione desiderata: <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/DirectionalPlanner.kt"><k>DirectionalPlanner</k></a></p>
 
         <h3>Architettura Logica</h3>
         <p>Ogni componente logico dovrebbe essere modellato come un attore come espresso dalla seguente architettura generale:</p>
@@ -357,7 +357,7 @@ div.imagedesc{
         <center>
             <img src="./img/GuiActor.png"  width="45%" height="32%" ><br>
         </center>
-        <p>Adesso analizziamo nel dettaglio le Gui, partendo dalla WasteServiceStatusGUI</p>
+        <p>Adesso analizziamo nel dettaglio le Gui</p>
         <p> La <k>WasteServiceStatusGUI</k> ha: </p>
         <ol>
             <li> <p>Una <k>Mappa</k>, necessaria al Manager per capire dov'è arrivato il robot.</p></li>
