@@ -255,19 +255,19 @@ div.imagedesc{
         <h4> Dizionario</h4>
        
             <ul>
-                <li> <i> Transport Trolley</i> : un DDR robot che ha come obbiettivo di trasportare il TruckLoad.</li>
+                <li> <i> Transport Trolley</i> : un DDR robot che ha come obbiettivo di trasportare il TruckLoad da una parte ad un'altra della nostra <em>Zona di servizio</em>. Formalizzazione: <a href="#Trolley" >Trolley</a> </li>
                 <li> <i> TruckLoad</i> : Quantitativo di spazzatura trasportata dal camion di rifiuti.</li>
                 <li> <i> TruckType</i> : Tipologia della spazzatura(plastica o vetro).</li>
                 <li> <i>MAXPB</i>: Massimo peso della spazzatura che il container di plastica può depositare.</li>
                 <li> <i>MAXGB</i>: Massimo peso della spazzatura che il container di vetro può depositare.</li>
-                <li> <i>LoadAccept</i>: risposta positiva alla richiesta di deposito del carico del camion dei rifiuti.</li>
-                <li> <i>LoadRejected</i>: risposta negativa alla richiesta di deposito del carico del camion dei rifiuti.</li>
+                <li> <i>LoadAccept</i>: risposta positiva alla richiesta di deposito del carico del camion dei rifiuti. Formalizzato:<k>messageClient : messageClient(loadaccept)</k></li>
+                <li> <i>LoadRejected</i>: risposta negativa alla richiesta di deposito del carico del camion dei rifiuti. Formalizzato:<k> messageClient : messageClient(loadreject)</k></li>
             </ul>
         
         <h3> software e hardware forniti</h3>
         <h4>Il Transport Trolley</h4>
         <p>Il <em>Trolley</em> è un robot ad azionamento diretto compatibile in termini di iterazione e comportamento con l'ambiente virtuale <k>Wenv</k> fornito dal committente</p>
-        <p>La comunicazione con il robot dovrebbe seguire la convenzione <k>aril(Abstract Robot Interaction Lanaguage).</k></p>
+        <p>La comunicazione con il robot dovrebbe seguire la convenzione <a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/anatali/issLab2021/main/it.unibo.boundaryWalk/userDocs/BoundaryWalk.html#aril"><k>aril(Abstract Robot Interaction Lanaguage).</k></a></p>
         <p>Per quanto riguarda la stanza, la grandezza?Le coordinate? come identifichiamo le Porte?</p>
         
         <h4>Sonar e Led</h4>
@@ -321,16 +321,23 @@ div.imagedesc{
                 <img src="./img/legenda.png" width="30%" height="15%"  ><br>
             </center>
         </ol>
-        <h4>L'area di Servizio e i suoi punti di interesse</h4>
-        <p>Il Robot deve funzionare , dove mostra le zone principali della mappa. Per ricrearla, come detto prima, possiamo usare l'ambiente virtuale <k>Wenv</k> e dopodichè dovremo far conoscere al nostro <k>Trolley</k> la stanza. Per far ciò possiamo ricorrrere ad uno strumento in nostro possesso chiamanto <k>Mapper</k>, che è in grado di guidare un robot all'interno di una stanza e fargli creare una <k>mappa</k> di essa.</p>
-        <p>Tale mappa creata, è parzialmente compatibile con uno strumento disponibile in nostro possesso chiamato <k>planner22Util</k>, che è in grado di pianificare il percorso per guidare un robot in punto specifico evitando eventuali ostacoli sul suo cammino.Tale strumento richiedere che la <k>mappa</k> sia in <k>formato binario</k>. 
-
-        <p>Tutti i punti della nostra area di servizio possono essere rappresentate come coppie di coordinate sulla mappa. Per una maggiore rappresentazione della posizione, non useremo coppie di coordinate ma una tripla di coordinate, che oltre la posizione (X e Y), ci fornirà anche l'orientamento del nostro <em>Trolley</em>.</p>
-        <p>L'unica posizione che possiamo definire è la posizione di Home, le altre cambieranno in base alla grandezza dell'area di servizio </p>
+        <h4 id="Trolley">L'area di Servizio e i suoi punti di interesse</h4>
+        <p>Il Robot deve funzionare in qualsiasi stanza ed ogni stanza sappiamo avere misure diversa, quindi il nostro Robot dovrà poter mappare la stanza. Con l'ausiolo del nostro <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/Trolley.qak" target="trolley" >Trolley</a> e di un software in nostro possesso(<k>Mapper</k>)(aggiungere qak con github?),possiamo creare una mappa dell'ambiente reale e usarlo nell'ambiente virtuale <k>Wenv</k>.La Mappa creata dal Mapper sarà una matrice</p>
+        <p>Tale mappa creata, è parzialmente compatibile con un software in nostro possesso <k>planner22Util</k>(inserire file??) , che è in grado di pianificare il percorso per guidare un robot in punto specifico evitando eventuali ostacoli sul suo cammino.Tale strumento richiedere che la <k>mappa</k> sia in <k>formato binario</k> e fortunatamente il nostro software Mapper lo crea. 
+        <p>A questo punto avremo una stanza mappata(stanza che a detta del committente è <k>RETTANGOLARE</k>) avrà una larghezza A e una larghezza Y</p>
+        <p>Tutti i punti della nostra area di servizio possono essere rappresentate come coppie di coordinate sulla mappa(matrice). </p>
+        <p>L'unica posizione che possiamo definire con sicurezza è la posizione di Home
         <pre>
-            Home:  [0, 0, S]
+            Home:  [0, 0]
         </pre>
-        <p>Per definire meglio la posizione, il nostro <k>Planner22Util</k> dovrebbe essere ampliato con un nuovo componente per aggiungere la funzionalità di pianificazione  dell'orientamento desiderato del Trolley accanto la posizione desiderata</p>
+        <p>Le altre cambieranno in base alla grandezza dell'area di servizio, che come detto prima avrà lunghezza A e larghezza Y. Inoltre sapendo dal committente che i punti di interesse sono sono agli spigoli della stanza potremmo formalizzare le coordinate della mappa(quindi coordinate su una matrice) come segue: </p>
+        <pre>
+            INDOOR:  [0, Y]
+            PLASTICBOX: [X,Y]
+            GLASSBOX: [X,0]
+        </pre>
+        <p>Per una maggiore rappresentazione della posizione, non useremo coppie di coordinate ma una tripla di coordinate, che oltre la posizione (X e Y), ci fornirà anche l'orientamento del nostro <em>Trolley</em>.</p>
+        <p>Per definire meglio la posizione, il nostro <k>Planner22Util</k> dovrebbe essere ampliato con un nuovo componente per aggiungere la funzionalità di pianificazione  dell'orientamento desiderato del Trolley accanto la posizione desiderata: <k>PlannerUtil</k></p>
 
         <h3>Architettura Logica</h3>
         <p>Ogni componente logico dovrebbe essere modellato come un attore come espresso dalla seguente architettura generale:</p>
@@ -361,16 +368,6 @@ div.imagedesc{
         <center>
             <img src="./img/Untitled_Diagram.drawio_1.png"  width="45%" height="32%" ><br>
         </center>
-        <P>Per quanto riguarda invece la <k>ClientGarbageRobotGu</k> ha :</P>
-        <ol>
-            <li> <p>Una <k>TextBox Modificabile</k>, necessaria al camionista per inserire il trackload.</p></li>
-            <li> <p>Due <K>CheckBox</K>, necessaria al camionista per dire che tipo di materiale sta introducendo</p></li>
-            <li> <p>Una <K>textBox non modificabile</K> che darà l'eseito della richiesta (può depositare/non può depositare)</p></li>
-        </ol>
-        <center>
-            <img src="./img/Untitled_Diagram.drawio.png"  width="45%" height="32%" ><br>
-        </center>
-
         <h4>I movimenti del Trolley</h4>
         <p>Per accedere al Wenv, è giusto considerare l'utilizzo di uno strumento più sofisticato che abbiamo a disposizione, denominato basicRobot, che sarebbe in grado di evitare interferenze tra comandi sovrapposti e di ricevere ordini di movimento espressi come passi.Un  nuovo servizio, denominato RobotProxy, potrebbe essere necessario per garantire la compatibilità tra il sistema in uso e il basicRobot.</p>
         <center>
