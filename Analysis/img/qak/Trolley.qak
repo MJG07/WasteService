@@ -1,0 +1,101 @@
+System garbagebot
+
+Dispatch goto : goto(PLACE)
+Dispatch cmd : cmd(MOVE)
+Request step : step(TIME)
+
+Reply stepdone : stepdone(V)
+
+
+Context ctxbasicrobot ip [host="127.0.0.1" port=8020]
+Context ctxgarbagebot ip [host="localhost" port=8032]
+
+
+ExternalQActor basicrobot context ctxbasicrobot 
+ 
+QActor trolleyactor context ctxgarbagebot{
+	 
+	[#
+		var home = arrayOf("-", "-", "-")
+		var plastic = arrayOf("-", "-", "-")
+		var indoor = arrayOf("-", "-", "-")
+		var glass = arrayOf("-", "-", "-")
+		var goingHome = false
+		var currentMove : String = "" 
+	#]
+	
+	State setup initial {
+		println("si parteeeeee")
+		solve( consult("locationsKb.pl") )
+		solve( home(X, Y, D) )
+		[# home = arrayOf(getCurSol("X").toString(), getCurSol("Y").toString(), getCurSol("D").toString().uppercase()) #]
+		solve( plastic(X, Y, D) )
+		[# plastic = arrayOf(getCurSol("X").toString(), getCurSol("Y").toString(), getCurSol("D").toString().uppercase()) #]
+		solve( indoor(X, Y, D) )
+		[# indoor = arrayOf(getCurSol("X").toString(), getCurSol("Y").toString(), getCurSol("D").toString().uppercase()) #]
+		solve( glass(X, Y, D) )
+		[# glass = arrayOf(getCurSol("X").toString(), getCurSol("Y").toString(), getCurSol("D").toString().uppercase()) #]
+		forward trolleyactor -m goto : goto(plastic)
+	}Transition t whenMsg goto -> idle
+
+	State idle {
+		println("idle")
+		onMsg (goto : goto(home)) {
+			run garbagebot.directionalPlanner.planFor(home)
+			[# goingHome = true #]
+		}
+		 
+		onMsg (goto : goto(plastic)) {
+			run garbagebot.directionalPlanner.planFor(plastic)
+			[# goingHome = false #]
+		}
+		onMsg (goto : goto(glass)) {
+			run garbagebot.directionalPlanner.planFor(glass)
+			[# goingHome = false #]
+		}
+		
+		onMsg (goto : goto(indoor)) {
+			run garbagebot.directionalPlanner.planFor(indoor)
+			[# goingHome = false #]
+		}
+		
+	} Goto working
+
+	State working {
+		[# currentMove = garbagebot.directionalPlanner.getNextPlannedMove() #]
+		if [# currentMove.isEmpty() #] {
+			delay 1000
+			if [# goingHome #] {
+				println("sono a casa baby")
+			}else{
+				println("arrivato")
+				forward trolleyactor -m goto : goto(home)
+			}
+		} 
+	}Goto gira if [# currentMove == "l" || currentMove == "r" #] else move
+	
+	State newCommand {}
+	Transition t
+		whenReply stepdone -> working
+		whenMsg goto -> idle
+		
+	State move{
+		if [# currentMove == "w" #] { request basicrobot -m step : step(350) 
+		run garbagebot.directionalPlanner.updateMap(currentMove)
+		println(currentMove)
+		run garbagebot.directionalPlanner.map()}
+	}Goto newCommand
+	
+	State gira{
+		if [# currentMove == "l" #] { forward basicrobot -m cmd : cmd(l) }
+		else { forward basicrobot -m cmd : cmd(r) }
+		run garbagebot.directionalPlanner.updateMap(currentMove)
+		println(currentMove)
+		run garbagebot.directionalPlanner.map()
+		delay 500
+	}Goto working
+	
+	
+	
+	
+}
