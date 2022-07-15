@@ -1,0 +1,46 @@
+System wastservice
+
+Request deposit : deposit(truckLoad,truckType)
+Reply loadaccept : loadaccpet(_)
+Reply loadreject : loadreject(_)
+
+Context ctxwastservice ip [host="localhost" port=8032]
+Context ctxtruckdriver ip [host="127.0.0.1" port=8033]
+
+ExternalQActor truckdriver context ctxtruckdriver
+
+QActor wastservice context ctxwastservice{
+	
+	[#
+			var MAXPB=22
+			var MAXGB=22
+			var GBS=0
+			var PBS=0
+	#]
+	
+	State idle initial{
+		
+	}Transition t whenRequest deposit -> control
+	
+	State control{
+		
+		onMsg(deposit : deposit(truckLoad,"vetro")){
+			if[# (GBS+truckLoad)<MAXGB #]{
+				replyTo deposit with loadaccept : loadaccpet(_)
+				[# GBS= GBS+truckLoad #]
+			}else{
+				replyTo deposit with loadreject : loadreject(_)
+			}
+		}
+		
+		onMsg(deposit : deposit(truckLoad,"plastica")){
+			if[# (PBS+truckLoad)<MAXPB #]{
+				replyTo deposit with loadaccept : loadaccpet(_)
+				[# GBS= GBS+truckLoad #]
+			}else{
+				replyTo deposit with loadreject : loadreject(_)
+			}
+		}
+	}
+	
+}

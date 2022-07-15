@@ -1,0 +1,39 @@
+System wasteservice
+
+Request deposit : deposit(truckLoad,truckType)
+Reply loadaccept : loadaccpet(_)
+Reply loadreject : loadreject(_)
+
+Context ctxwastservice ip [host="127.0.0.1" port=8032]
+Context ctxtruckdriver ip [host="localhost" port=8033]
+
+ExternalQActor wastservice context ctxwastservice
+
+QActor truckdriver context ctxtruckdriver{
+	
+	State start initial{
+		[#
+			var truckLoad=
+			var truckType=
+		#]
+		
+		request wastservice -m deposit : deposit(truckLoad,truckType)
+		
+	}Transition t whenReply loadaccept -> deposit
+				  whenReply loadreject -> goAwey
+	
+	State deposit{
+		
+	}Goto goAwey
+	
+	State goAwey{
+		onMsg(loadreject: loadreject(_)){
+			delay 300
+		}
+		onMsg(loadaccept: loadaccept(_)){
+			delay 700
+		}
+	}
+	
+	
+}
