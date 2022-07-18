@@ -1,0 +1,81 @@
+System wastservice
+
+Request deposit : deposit(TRUCKLOAD,TRUCKTYPE)
+Reply loadaccept : loadaccpet(_)
+Reply loadreject : loadreject(_)
+Request pickup : pickup(_)
+Request deposit : deposit(_)
+Request home : home(_)
+Reply executeaction : executeaction(RESULT)
+
+Context ctxwastservice ip [host="localhost" port=8032]
+
+
+QActor wastservice context ctxwastservice{
+	
+	[#
+			val MAX = mapOf(wasteservice.state.Material.PLASTIC to 22.0,
+				wasteservice.state.Material.GLASS to 22.0)
+			val currentState = wasteservice.state.WasteState()
+			lateinit var truckType : wasteservice.state.Material //glass, plastic
+			var truckLoad : Double = 0.0 	
+	#]
+	
+	
+	State idle initial{
+		updateResource [# currentState.toStringRepresentation() #] 
+	}Transition t whenRequest deposit -> control
+	
+	State control{
+		onMsg(deposit : deposit(TRUCKLOAD,TRUCKTYPE)){
+			[#
+				 
+				 try {
+				 	truckType = wasteservice.state.Material.valueOf(payloadArg(1).trim().uppercase())
+				 	truckLoad = payloadArg(0).trim().toDouble()
+				 	if(currentState.canStore(truckType, MAX[truckType]!!, truckLoad)) {
+				 		currentState.addLoad(truckType, truckLoad)
+			 		#]
+			 			updateResource [# currentState.toStringRepresentation() #]
+			 			replyTo deposit with loadaccept : loadaccpet(_) 
+			 		[#
+				 	} else {
+				 	#]
+				 		replyTo deposit with loadreject : loadreject(_)
+				 	[#
+				 	}
+				 } catch(e : Exception) {
+				 #]
+				 	replyTo deposit with loadreject : loadreject(_)
+				[#
+				 }
+				 
+			#]
+			
+		}
+	}Goto idle
+
+	
+}
+
+	
+QActor transporttrolley context ctxwastservice{
+	
+	State idle initial{
+		
+	}Transition t whenRequest pickup -> pickup
+	
+	State pickup{
+		replyTo pickup with executeaction : executeaction(done)
+	}Transition t whenRequest deposit -> deposit
+	
+	State deposit{
+		replyTo deposit with executeaction : executeaction(done)
+	}Transition t whenRequest pickup -> pickup
+				  whenRequest home -> home
+				  
+	State home{
+		replyTo home with executeaction : executeaction(done)
+	}Goto idle
+	
+}

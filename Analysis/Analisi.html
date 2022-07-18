@@ -271,7 +271,8 @@ div.imagedesc{
         <p><k>Reply loadaccept : loadaccpet(_)</k></p>
         <p><k>Reply loadreject : loadreject(_)</k></p>
         <p>Visti questi scambi di messaggi, assumereò che queste due entità sono <k>Attori</k> e modellerò utilizzando il Meta-modello QAK.</p>
-        <p>Adesso, come per i messaggi, formalizziamo il TruckDriver e il WasteService:</p>
+        <p>Adesso, come per i messaggi, formalizziamo il <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/truckDriver.qak">TruckDriver</a> e il <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/wasteService.qak">WasteService</a>:</p>
+        
         <center>
             <img src="./img/truckdriver.png" alt="mbot" width="35%" height="15%">
             <img src="./img/wasteService.png" alt="mbot" width="30%" height="15%">
@@ -280,31 +281,20 @@ div.imagedesc{
         <h4>TransporTrolley</h4>
         <p>Il transportTrolley è un'entità che viene comandata al fine di comandare il DDR Robot.</p>
         <p>Il committente ha precisato che il transportTrolley <k>NON E' il DDR Robot</k>  ma il Trolley <k>USA</k> il DDR Robot.A tal fine possiamo dire che, essendo che il Trolley deve comandare il DDR Robot, lo farà per mezzo del software basicrobot22, ed essendo quest'ultimo un attore,per usare un attore si deve essere Attori.</p>
-        <p>A questo punto, formalizziamo il nostro TransportTrolley:</p>
+        <p>A questo punto, formalizziamo il nostro <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/wasteService.qak">TransportTrolley</a></p>
+        <center>
+            <img src="./img/trolley.png" width="30%" height="15%"  ><br>
+        </center>
         
         <h4>Sonar e Led</h4>
-        <p>Il committente ha dichiarato che il <em>Sonar</em> deve misurare la <k>Distanza</k> che registra durante i movimenti del Trolley e nel caso legga una distanza minore di un DLIMT il Trolley deve fermarsi.Per quanto Riguarda il <em>Led</em> esso dovrà lampeggiare nel caso in cui il Trolley sia in movimento e dovrà rimanere accesso in caso il Trolley sia fermo al di fuori della Home, altrimenti il Led sarà spento. Il committente fornisce i codici per il funzionamento sia del <em>Sonar</em> che del <em>Led</em></p>
-        <p>Il Sonar dovrebbero essere in qualchè una<em>Entità interrogabile</em> per sapere se sta rilevando o meno una presenza. Dovrebbero anche essere inseriti dietro una sorta di <k>interfaccia</k></p>
-        <p>Per quanto riguarda il <k>Sonar</k> visto che è un componente fisico, verrà usato un HC-SR04(sensore di distanza) montato sun un RaspBerry Py. Oltre al Sonar, verrà montato anche un <k>Led</k>.</p>
-        <p>Entrambi i compoonenti possono essere <em>Modellati</em> nel seguente modo: </p>
-        <p><a href="https://github.com/anatali/issLab2022/blob/main/unibo.ledqak22/src/ledqak22.qak" target="led" >LED</a></p>
-        <p><a href="https://github.com/anatali/issLab2022/blob/main/unibo.sonarqak22/src/sonarqak22.qak" target="sonar" >Sonar</a></p>
-
-        <h4>WasteServiceStatusGUI</h4>
-        <p>La <k>ClientGarbageRobotGui</k>  deve essere fornita dal nostro WasteService </p>
-        <p>Il committente ha inteso che la GUI debba essere un'entità in grado di funzionare su molti dispositivi. Probabilmente è meglio se esse siano proggettate come <k>Web GUI</k></p>
+        <p>Il led è un'entità, collegata ad un RaspberryPi, che deve compiere determinate azioni determinate dai movimenti del nostro DDR Robot</p>
+        <p>Il Committente ci fornisce i software per il led:</p>
+        <p>Adesso formalizziamo il nostro <a href="https://github.com/anatali/issLab2022/blob/main/unibo.ledqak22/src/ledqak22.qak" target="led" >LED</a></p>
+        <p>Per quanto riguarda il Sonar, anch'esso sarà attaccato ad un RaspberryPi e il committente ci fornisce il seguente software: <a href="https://github.com/anatali/issLab2022/blob/main/it.unibo.raspIntro2022/code/radarSystem/SonarAlone.c" target="led" >SonarAlone.c</a></p>
+        <p>In fine formalizziamo il nostro<a href="https://github.com/anatali/issLab2022/blob/main/unibo.sonarqak22/src/sonarqak22.qak" target="sonar" >Sonar</a></p>
 
         <h3>Users Stories</h3>
-        <k><em>Camionista dei rifiuti:</em></k>
-        <p>Arrivando all'Indoor, il camionista comunica ,<k>tramite un dispositivo smart<em>(app?GUI? possibile UI?)</em></k>,il suo interesse nel depositare il carico, specificando la tipologia del materiale che vuole depositare e il suo TruckLoad.</p>
-        <p>Se:</p>
-        <ul>
-            <li><p>il carico che vuole lasciare sommato al carico già presente nei box(PE o GB) supera il valore massimo consentito (MAXPB o MAXGB), il camion dei rifiuti riceve una risposta negativa alla sua richiesta.</p> </li>
-            <li><p>Il carico che vuole lasciare sommato al carico già presente nei box(PE o GB) non supera il valore massimo consentito (MAXPB o MAXGB),il camion dei rifiuti deposita i rifiuti all'interno e se ne va.</p></li>
-        </ul>
-
-        <k><em>Service-manager </em></k>
-        <p>Intende usare la WasteServiceStatusGUI, fornita dal WasteService per osservare lo stato attuale del robot, per vedere la sua posizione e vedere lo stato della GlassBox e della PlasticBox.Inoltre ha la possibilità di vedere se il robot si sta muovendo</p>
+        <p>Nella fase di requirements è spiegata la users stories</p>
 
 
     </div>
@@ -314,79 +304,10 @@ div.imagedesc{
     <h2>Problem analysis</h2>
 
     <div class="remark">
-    
-        <h3>Aspetti Rilevanti</h3>
-
-        <ol>
-            <li>Il sistema da realizzare sarà un sistema distribuito, composto da più macro-componenti:</li>
-            <ul>
-                <li>Il <k>carrello di trasporto(Transport Trolley)</k></li>
-                <li>Il <k>Sonar</k></li>
-                <li>Il <k>Led</k></li>
-                <li>I nostri <k>applicativi</k>(WasteService, completo di due GUI), che invia i comandi al carrello per soddisfare i requisiti</li>
-            </ul>
-
-            <li>Questo sistema distribuito che vogliamo realizzare è composto da più componenti eterogenee, potrebbe trarre grandi benefici da un framework basato su attori con supporto per l'interazione di passaggio di messaggi. A tal fine, possiamo sfruttare il <a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/anatali/issLab2021/main/it.unibo.qakactor/userDocs/LabQakIntro2021.html#qakoverview">Meta-Modello QAK</a> per costruire modelli eseguibili. Con questa possibilità però, ci troviamo davanti un divario di astrazione per quanto riguardi l'uso dei linguaggi, perchè QAK si basa su Java e Kotlin.Tuttavia, QAK stesso riesce a colmare gran parte di questa limitazione, in quanto viene fornito con un proprio linguaggio specifico e inoltre perchè il AQK è stato progettati specificatamente per sistemi distribuiti eterogenei</li>
-            <li>Il <k>meta-modello QAK</k> fornisce compatibilità con i protocolli di comunicazione MQTT,COAP e TCP, ugualmente valido per l'iterazione tra attori. Per quanto riguarda la comunicazione con il Wenv(o altri Trolley compatibili), entrambi i modelli di iterazione supportati(quali WebSocket, Post e HTTP) sono idonei al compito da svolgere</li>
-            <li>Useremo la seguente <em>leggenda</em> per gli schemi che realizzeremo nel documento:</li>
-            <center>
-                <img src="./img/legenda.png" width="30%" height="15%"  ><br>
-            </center>
-        </ol>
-        <h4 id="Trolley">L'area di Servizio e i suoi punti di interesse</h4>
-        <p>Il Robot deve funzionare in qualsiasi stanza ed ogni stanza sappiamo avere misure diversa, quindi il nostro Robot dovrà poter mappare la stanza. Con l'ausiolo del nostro <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/Trolley.qak" target="trolley" >Trolley</a> e di un software in nostro possesso(<k>Mapper</k>)(aggiungere qak con github?),possiamo creare una mappa dell'ambiente reale e usarlo nell'ambiente virtuale <k>Wenv</k>.La Mappa creata dal Mapper sarà una matrice</p>
-        <p>Tale mappa creata, è parzialmente compatibile con un software in nostro possesso <k>planner22Util</k>(inserire file??) , che è in grado di pianificare il percorso per guidare un robot in punto specifico evitando eventuali ostacoli sul suo cammino.Tale strumento richiedere che la <k>mappa</k> sia in <k>formato binario</k> e fortunatamente il nostro software Mapper lo crea. 
-        <p>A questo punto avremo una stanza mappata(stanza che a detta del committente è <k>RETTANGOLARE</k>) avrà una larghezza A e una larghezza Y</p>
-        <p>Tutti i punti della nostra area di servizio possono essere rappresentate come coppie di coordinate sulla mappa(matrice). </p>
-        <p>L'unica posizione che possiamo definire con sicurezza è la posizione di Home
-        <pre>
-            Home:  [0, 0]
-        </pre>
-        <p>Le altre cambieranno in base alla grandezza dell'area di servizio, che come detto prima avrà lunghezza A e larghezza Y. Inoltre sapendo dal committente che i punti di interesse sono sono agli spigoli della stanza potremmo formalizzare le coordinate della mappa(quindi coordinate su una matrice) come segue: </p>
-        <pre>
-            INDOOR:  [0, Y]
-            PLASTICBOX: [X,Y]
-            GLASSBOX: [X,0]
-        </pre>
-        <p>Per una maggiore rappresentazione della posizione, non useremo coppie di coordinate ma una tripla di coordinate, che oltre la posizione (X e Y), ci fornirà anche l'orientamento del nostro <em>Trolley</em>.</p>
-        <p>Per definire meglio la posizione, il nostro <k>Planner22Util</k> dovrebbe essere ampliato con un nuovo componente per aggiungere la funzionalità di pianificazione  dell'orientamento desiderato del Trolley accanto la posizione desiderata: <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/DirectionalPlanner.kt"><k>DirectionalPlanner</k></a></p>
-
-        <h3>Architettura Logica</h3>
-        <p>Ogni componente logico dovrebbe essere modellato come un attore come espresso dalla seguente architettura generale:</p>
-        <center>
-            <img src="./img/schema Logico.png"  width="45%" height="32%" ><br>
-        </center>
-
-        <h4>Buinsess Logic</h4>
-        <center>
-            <img src="./img/buisnessLogic.png"  width="45%" height="32%" ><br>
-        </center>
-        <p>La logica della buisness logic può essere descritta come una macchina a stati finiti che racchiude un attore vero e proprio.Questo attore controlla la stato principale della nosta applicazione e presenta un comportamento reattivo.</p>
-        <p>Il "goto" viene consegnato ad una entità che sia in grado di eseguire l'insieme implicto di azioni elementari del nostro Trolley.</p>
-
-        <h4>Le interfacce Utente (GUI)</h4>
-        <p> Il WasteService è composto da 2 Gui: la WasteServiceStatusGUI, utilizzata dal manager-service e la ClientGarbageRobotGui, utilizzata dal guidatore del camion dei rifiuti.Entrambe le gui devono essere controllate da due attori diversi ed indipendenti perchè potrebbero non essere messe sullo stesso nodo della buisness logic.</p>
-        <center>
-            <img src="./img/GuiActor.png"  width="45%" height="32%" ><br>
-        </center>
-        <p>Adesso analizziamo nel dettaglio le Gui</p>
-        <p> La <k>WasteServiceStatusGUI</k> ha: </p>
-        <ol>
-            <li> <p>Una <k>Mappa</k>, necessaria al Manager per capire dov'è arrivato il robot.</p></li>
-            <li> <p>Due <K>TextBox</K> in cui saranno presenti i quantitativi di plastica/vetro all'interno dei container</p></li>
-            <li> <p>Un check per quanto riguardo lo stato del Led(si proverà a simulare il led)</p></li>
-    
-        </ol>
-        <center>
-            <img src="./img/Untitled_Diagram.drawio_1.png"  width="45%" height="32%" ><br>
-        </center>
-        <h4>I movimenti del Trolley</h4>
-        <p>Per accedere al Wenv, è giusto considerare l'utilizzo di uno strumento più sofisticato che abbiamo a disposizione, denominato basicRobot, che sarebbe in grado di evitare interferenze tra comandi sovrapposti e di ricevere ordini di movimento espressi come passi.Un  nuovo servizio, denominato RobotProxy, potrebbe essere necessario per garantire la compatibilità tra il sistema in uso e il basicRobot.</p>
-        <center>
-            <img src="./img/trolley_driving.png"  width="45%" height="32%" ><br>
-        </center>
-        <p>Il WEnv usa un "paradigma di comunicazione" richiesta-risposta. Anche se alcuni passaggi intermedi protrebbero favorire approcci diversi, la risposta del WEnv va sempre ricondotta all'attore che ha creato le relative richieste.</p>
+        
     </div>
+    
+      
             
     <!-- USEFUL
     <table style="width:100%" border="1">
