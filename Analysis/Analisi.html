@@ -293,9 +293,18 @@ div.imagedesc{
         <p>Per quanto riguarda il Sonar, anch'esso sarà attaccato ad un RaspberryPi e il committente ci fornisce il seguente software: <a href="https://github.com/anatali/issLab2022/blob/main/it.unibo.raspIntro2022/code/radarSystem/SonarAlone.c" target="led" >SonarAlone.c</a></p>
         <p>In fine formalizziamo il nostro<a href="https://github.com/anatali/issLab2022/blob/main/unibo.sonarqak22/src/sonarqak22.qak" target="sonar" >Sonar</a></p>
 
-        <h3>Users Stories</h3>
-        <p>Nella fase di requirements è spiegata la users stories</p>
+        <h3>TesPlan</h3>
 
+        <h4>Test WastService</h4>
+        <p>I test effettuatoi consistono nell'invio della richiesta di deposito al WasteService.</p>
+        <p>Nel primo test, il wasteService dovrà rispondere con un loadAccept dato che il peso è inferiore a quello rimanente.Inoltre per la riuscita del test si dovrà confrontare che lo stato precedente dei pesi più quelli depositati ora sia uguale a quelli correnti.</p>
+        <p>Nel secondo test, il wasteService dovrà rispondere con un loadRejecetd dato che il peso è superiore a quello rimanente.Inoltre per la riuscita del test si dovrà confrontare che lo stato precedente dei pesi è uguale a quello corrente</p>
+        <p>Si mostrano i <a href="https://github.com/MJG07/WasteService/blob/master/TestWorkspace/testWastService/test/wasteservice/TestWastService.kt" >TestWasteService</a> e il modello del <a href="https://github.com/MJG07/WasteService/blob/master/TestWorkspace/testWastService/src/wasteService.qak#L14" >WasteService</a> utilizzato.</p>
+
+        <h4>Test TransportTrolley</h4>
+        <p>Il test effettuato consiste nell'invio delle richieste al TransportTrolley</p>
+        <p>Nel test vedremo una serie di messaggi che faranno transitare il transportTrolley negli stati descritti e il test avrà sucesso se la risposta del trolley è quella aspettata. Inoltre il test riuscirà se lo stato verrà aggiornato correttamente</p>
+        <p>Si mostra il <a href="https://github.com/MJG07/WasteService/blob/master/TestWorkspace/testWastService/test/wasteservice/TestTransportTrolley.kt" >TestTransportTrolley</a> e il modello del <a href="https://github.com/MJG07/WasteService/blob/master/TestWorkspace/testWastService/src/wasteService.qak#L62" >TransportTrolley</a></p>
 
     </div>
 
