@@ -14,28 +14,51 @@ class Transporttrolley ( name: String, scope: CoroutineScope  ) : ActorBasicFsm(
 		return "idle"
 	}
 	override fun getBody() : (ActorBasicFsm.() -> Unit){
+		
+					lateinit var TrolleyPos : String
 		return { //this:ActionBasciFsm
 				state("idle") { //this:State
 					action { //it:State
+						 TrolleyPos = "home"  
+						updateResourceRep( "trolleyPos(home)"  
+						)
 					}
-					 transition(edgeName="t1",targetState="pickup",cond=whenRequest("pickup"))
+					 transition(edgeName="t01",targetState="pickup",cond=whenRequest("pickup"))
 				}	 
 				state("pickup") { //this:State
 					action { //it:State
-						answer("pickup", "executeaction", "executeaction(done)"   )  
+						 TrolleyPos = "Indoor"  
+						updateResourceRep( "trolleyPos(indoor)"  
+						)
+						answer("pickup", "executeaction", "executeaction(donePickup)"   )  
 					}
-					 transition(edgeName="t2",targetState="deposit",cond=whenRequest("deposit"))
+					 transition(edgeName="t02",targetState="deposit",cond=whenRequest("deposita"))
 				}	 
 				state("deposit") { //this:State
 					action { //it:State
-						answer("deposit", "executeaction", "executeaction(done)"   )  
+						if( checkMsgContent( Term.createTerm("deposita(BOX)"), Term.createTerm("deposita(BOX)"), 
+						                        currentMsg.msgContent()) ) { //set msgArgList
+									var box = payloadArg(0)	 
+								println(box)
+								if(  box.trim().uppercase()=="glass"  
+								 ){ TrolleyPos = "glassBox"  
+								updateResourceRep( "trolleyPos(glassBox)"  
+								)
+								}
+								else
+								 { TrolleyPos = "plasticBox"  
+								 updateResourceRep( "trolleyPos(plasticBox)"  
+								 )
+								 }
+						}
+						answer("deposita", "executeaction", "executeaction(doneDeposit)"   )  
 					}
-					 transition(edgeName="t3",targetState="pickup",cond=whenRequest("pickup"))
-					transition(edgeName="t4",targetState="home",cond=whenRequest("home"))
+					 transition(edgeName="t03",targetState="pickup",cond=whenRequest("pickup"))
+					transition(edgeName="t04",targetState="home",cond=whenRequest("home"))
 				}	 
 				state("home") { //this:State
 					action { //it:State
-						answer("home", "executeaction", "executeaction(done)"   )  
+						answer("home", "executeaction", "executeaction(doneHome)"   )  
 					}
 					 transition( edgeName="goto",targetState="idle", cond=doswitch() )
 				}	 
