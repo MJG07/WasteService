@@ -190,7 +190,7 @@ div.imagedesc{
     
 <head>
    
-<title>Garbage Robot</title></head>
+<title>WasteService</title></head>
     
 <body>
 <div id="top">
@@ -270,8 +270,9 @@ div.imagedesc{
         <p>Dall'altra parte il westService, dopo aver effettuato i controlli, <k>risponderà</k> al truckDriver con il messaggio loadAccept o loadRejecetd che possiamo formalizzare nel seguente modo:</p>
         <p><k>Reply loadaccept : loadaccpet(_)</k></p>
         <p><k>Reply loadreject : loadreject(_)</k></p>
-        <p>Visti questi scambi di messaggi, assumereò che queste due entità sono <k>Attori</k> e modellerò utilizzando il Meta-modello QAK.</p>
+        <p>Visti questi scambi di messaggi, assumereò che queste due entità sono <k>Attori</k> e modellerò utilizzando il <a href="http://htmlpreview.github.io/?https://github.com/MJG07/WasteService/blob/master/Analysis/riassunto/Qak.html">Meta-modello QAK</a>.</p>
         <p>Adesso, come per i messaggi, formalizziamo il <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/truckDriver.qak">TruckDriver</a> e il <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/wasteService.qak">WasteService</a>:</p>
+        
         
         <center>
             <img src="./img/truckdriver.png" alt="mbot" width="35%" height="15%">
@@ -280,7 +281,7 @@ div.imagedesc{
 
         <h4>TransporTrolley</h4>
         <p>Il transportTrolley è un'entità che viene comandata al fine di comandare il DDR Robot.</p>
-        <p>Il committente ha precisato che il transportTrolley <k>NON E' il DDR Robot</k>  ma il Trolley <k>USA</k> il DDR Robot.A tal fine possiamo dire che, essendo che il Trolley deve comandare il DDR Robot, lo farà per mezzo del software basicrobot22, ed essendo quest'ultimo un attore,per usare un attore si deve essere Attori.</p>
+        <p>Il committente ha precisato che il transportTrolley <k>NON E' il DDR Robot</k>  ma il Trolley <k>USA</k> il DDR Robot.A tal fine possiamo dire che, essendo che il Trolley deve comandare il DDR Robot, lo farà per mezzo di software intero alla nostra softwareHouse, chiamato <a href="https://github.com/anatali/issLab2022/blob/main/unibo.basicrobot22/src/basicrobot.qak#L33"> basicrobot22</a>, ed essendo quest'ultimo un attore,per usare un attore si deve essere Attori.</p>
         <p>A questo punto, formalizziamo il nostro <a href="https://github.com/MJG07/WasteService/blob/master/Analysis/img/qak/wasteService.qak">TransportTrolley</a></p>
         <center>
             <img src="./img/trolley.png" width="30%" height="15%"  ><br>
@@ -288,7 +289,7 @@ div.imagedesc{
         
         <h4>Sonar e Led</h4>
         <p>Il led è un'entità, collegata ad un RaspberryPi, che deve compiere determinate azioni determinate dai movimenti del nostro DDR Robot</p>
-        <p>Il Committente ci fornisce i software per il led:</p>
+        <p>Il Committente ci fornisce i software per il led: <a href="https://github.com/anatali/issLab2022/blob/main/it.unibo.raspIntro2022/code/bash/led25GpioTurnOff.sh">LedOff</a>, <a href="https://github.com/anatali/issLab2022/blob/main/it.unibo.raspIntro2022/code/bash/led25GpioTurnOn.sh" >LedOn</a>  </p> 
         <p>Adesso formalizziamo il nostro <a href="https://github.com/anatali/issLab2022/blob/main/unibo.ledqak22/src/ledqak22.qak" target="led" >LED</a></p>
         <p>Per quanto riguarda il Sonar, anch'esso sarà attaccato ad un RaspberryPi e il committente ci fornisce il seguente software: <a href="https://github.com/anatali/issLab2022/blob/main/it.unibo.raspIntro2022/code/radarSystem/SonarAlone.c" target="led" >SonarAlone.c</a></p>
         <p>In fine formalizziamo il nostro<a href="https://github.com/anatali/issLab2022/blob/main/unibo.sonarqak22/src/sonarqak22.qak" target="sonar" >Sonar</a></p>
@@ -311,9 +312,64 @@ div.imagedesc{
 
 
     <h2>Problem analysis</h2>
-
     <div class="remark">
-        
+        <h4>Area di servizio</h4>
+    <p>Il committente richiede che il WasteService possa funzionare in qualsiasi area di servizio. Di conseguenza dobbiamo capire come <k>creare</k> la nostra stanza, che riferimento dare per le varie <k>posizioni</k>
+    e di conseguenza come far <k>muovere</k> il DDR roboto tramite il TransportTrolley </p>
+    <p>Prendendo in esame la stanza, potremmo usare per la sua rappresentazione</p>
+    <ul>
+        <li><p>un piano cartesiano X,Y dove indichiamo con X la lunghezza e con Y la larghezza della stanza. </p>    
+        <center>
+            <p><img src="./img/Rapp_piano_cart.png" width="25%" height="25%" ></p>
+        </center>
+        <p>e esprimeremo le coordinate come coppia di punti(X,Y)</p>
+        </li>
+        <li><p>una rappresentazione matriciale di essa con m-righe uguale alla lunghezza della stanza e n-colonne quant'è la larghezza della stanza</p>
+            <p>Potremmo formalizzarla nel seguente modo:</p>
+            <pre>
+                r, 1, 1, 1, 1, 1, 1, 1,
+                1, 0, 0, 0, 0, 0, 0, 1,
+                1, 0, 0, 0, 0, 0, 0, 1,
+                1, 0, 0, X, 0, 0, 0, 1,
+                1, 0, 0, 0, 0, 0, 0, 1,
+                1, 1, 1, 1, 1, 1, 1, 1, 
+            </pre>
+            <p>Dove con gli 1 rappresentiamo le zone visitate della matrice, con 0 quelle non visitate e con le X gli ostacoli(non sarà il nostro caso)</p>
+            <p>Infine con r rappresenteremo la locazione attuale del nostro DDR Robot</p>
+        </li>
+    </ul>
+    <p>Prendendo in esame le ipotesi precedentemente dette, <k>consigliamo</k> di usare la rappresentazione matriciale della stanza dato che, all'interno della nostra softwareHouse, abbiamo un software chiamoto unibo.planner22 che lavora con una mappa rappresentata in modo matriciale</p>
+
+    <h4>Rappresentazione Delle coordinate dei Punti d'interesse</h4>
+    <p>
+        Essendo che il nostro servizio debba funzionare in tutte le stanze, oltre a capire come rappresentare esse dobbiamo anche soffermarci su come
+        rappresentare le coordinate dei punti d'interesse(Home, PlasticBox, Indoor, GlassBox)
+    </p>
+    <p>Potremmo rappresentarle in vari modi:</p>
+    <ul>
+        <li>
+            E' possibile rappresentarle come coordinate GPS, dando latitudine e longitudine al sistema(dando gradi,minuti e secondi )
+        </li>
+        <li>
+            E' possibile rappresentarle come punti su un piano cartesiano con una doppia di valori (X,Y)
+        </li>
+        <li>
+            E' possibile rappresentarle come coppia colonna-riga di una matrice (Aij)
+        </li>
+        <li>
+            E' possibile anche rappresentare come una tripla di coordinate(i,j,d), dove con i e j indicheremo le coordinate matriciali visti nel punto precedente, e indicheremo con d la direzione che il robot deve assumere in quella posizione.
+        </li>
+    </ul>
+    <p>Date le conlusioni del punto precedente, <k>consigliamo</k> di scegliere una tra le due ultime rappresentazione  in quanto il software unibo.planner22 richiede coordinate matriciali per la sua esecuzione del planner</p>
+    <p>Nel caso si scelga l'ultima opzione però, il software andrebbe esteso con una funzionalità che legga e pianifica la direzione del Robot.</p>
+
+    <h4>Unità Robotica</h4>
+    <h4>Radar</h4>
+    <h4>SmartDevice for TruckDriver</h4>
+    <h4></h4>
+
+
+
     </div>
     
       
