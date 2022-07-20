@@ -389,14 +389,20 @@ div.imagedesc{
         <li>Function</li>
         <li>Qak</li>
     </ul>
-    <p>La soluzione presa in considerazione è quella di trattare il <k>Sonar</k> come un attore e per rapresentarne un modello abbiamo usufruito del 
+    <p>La soluzione presa in considerazione è quella di trattare il <k>Sonar Osservable</k> come un attore e per rapresentarne un modello abbiamo usufruito del 
     modello Qak fornito dal committente.</p>
-    <p>In seguito dopo aver scelto la tipologia di sviluppo le scelte di interazione del <k>Sonar</k> con il sistema del WasteService sono due:</p>
+    <p>In seguito dopo aver scelto la tipologia di sviluppo le scelte di interazione del <k>Sonar Osservable</k> con il sistema del WasteService sono due:</p>
     <ul>
-        <li>Osservable</li>
-        <li>Interazione a polling</li>
+        <li>Proattivo</li>
+        <li>Reattivo</li>
     </ul>
-    <p>Si consiglia di usare il modello osservabile in quanto...sarà il sistema richiederà restando in "ascolto" di essera chiamata in caso di verifica di un determinato evento che scaturisce.</p>
+    <p>Si consiglia di usare il modello Osservabile Proattivo in quanto consiste nella continua rilevazione della distanza e nella emissione di eventi con il valore della distanza-misurata.
+        Questi eventi assumono la forma che segue: </p>
+
+    <pre>msg(distance,event,sonar,_,D,N)</pre> 
+
+    <p>ove D è il valore della distanza misurata. Qui sarà l'"Osservatore" a dover captare il messaggio fornito dal <k>Sonar Osservable</k> senza influenzare il suo funzionamento</p> 
+   
     <h4>SmartDevice for TruckDriver</h4>
     <p>Per quanto riguarda lo SmartDevice del TruckDriver vi sono più tipologia di sviluppo:</p>
     <ul>
