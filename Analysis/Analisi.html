@@ -382,10 +382,33 @@ div.imagedesc{
     </ul>
     <p>Entrambe le rappresentazioni sono valide ed entrambe ottimizzate.Una ci consentirà di evitare l'uso del nostro software, l'altra invece di evitare determinati calcoli, ma entrambe porteranno alla medesima soluzione</p>
     <p>Si lascia agli sviluppatori la libera scelta sull'approccio da usare</p>
-    <h4>Radar</h4>
+    <h4>Sonar</h4>
+    <p>Il sistema software che gestisce <k>Sonar</k> viene fornito dal committente sotto forma di: </p>
+    <ul>
+        <li>POJO</li>
+        <li>Function</li>
+        <li>Qak</li>
+    </ul>
+    <p>La soluzione che abbiamo preso in considerazione è quella di trattare il <k>Sonar</k> come un attore e per rapresentarne un modello abbiamo usufruito del 
+    modello Qak fornito dal committente.</p>
+    <p>In seguito dopo aver scelto la tipologia di sviluppo le scelte di interazione del <k>Sonar</k> con il sistema del WasteService sono due:</p>
+    <ul>
+        <li>Osservable</li>
+        <li>Interazione a polling</li>
+    </ul>
+    <p>Il sistema scelto è quello osservabile in quanto sarà il sistema richiederà restando in "ascolto" di essera chiamata in caso di verifica di un determinato evento che scaturisce.</p>
     <h4>SmartDevice for TruckDriver</h4>
-
-
+    <p>Per quanto riguarda lo SmartDevice del guidatore del camion vi sono più tipologia di sviluppo:</p>
+    <ul>
+        <li>UI, l'interazione avverrà medante terminale</li>
+        <li>GUI, applicazione web che permette di avere un interzione mediante un sito internet</li>
+        <li>App Android, in questo caso vi si crea un applicazione Android che può essere istanlata nel telefono</li>
+    </ul>
+    <p>La soluzione scelta in fase di test è quella della UI, utilizzando come linguaggio il python, 
+        per i primi prototipi del WasteService. Questo permette di avere dei risultati in tempi brevi,
+        ma non esclude la possibilità di futuri aggiornamenti  e di arrivo in fase finale dello sviluppo di utilizzare o una GUI o un App Android.
+    </p>
+    <p>L'interazione con il WestService verra mediante richieste (request) di tipo CoAP, e il sistema come già definito ripsonderà medianete : loadaccept, loadrejecetd.</p>
 
     </div>
     
