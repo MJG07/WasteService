@@ -318,15 +318,15 @@ div.imagedesc{
     <h2>Problem analysis</h2>
     <div class="remark">
         <h4>Movenze del robot</h4>
-        <p>Una volta aver deciso le varie rappresentazione, dobbiamo capire come il robot sa di quanto si deve muovere all'interno dell'aria di servizio.
+        <p>Dobbiamo capire come il robot sa di quanto si deve muovere all'interno dell'aria di servizio.
             Noi sappiamo che ogni step verrà comandato dal messaggio:</p>
         <center>
             <p>request basicrobot -m step : step(TIME) </p>
         </center>
-        <p>Ciò porterà il robot a compiere uno spostamento di tempo "TIME" ma noi da questo spostamento potremmo trarre le conclusioni sulla nostra mappa.</p>
+        <p>Ciò porterà il robot a compiere uno spostamento di tempo "TIME" </p>
         <p>Le soluzioni potrebbero essere:</p>
         <ul>
-            <li><p>Avendo il TIME, possiamo far mappare al nostro robot qualsiasi stanza grazie all'impiego del software <k>Mapper</k>.Esso ci consentirà di creare la mappa della stanza e trarre da lì tutte le coordinate </p></li>
+            <li><p>Avendo il TIME, possiamo far mappare al nostro robot qualsiasi stanza grazie all'impiego del software <a href="https://github.com/anatali/issLab2022/blob/main/unibo.mapperQak22/src/mapperqak22.qak">"<k>Mapper</k></a>.Esso ci consentirà di creare la mappa della stanza e trarre da lì tutte le coordinate </p></li>
             <li><p>Avendo il TIME,la velocità del robot e le misure della stanza, salvando esse in un file di configurazione(permettendo la semplicità di un cambiamento di impostazioni in caso di ingradimento o restringimento dell'area da parte del committente),è possibile tramite la formula:</p>
             <center>
                 Ur=TIME * VELOCITA'
@@ -336,7 +336,7 @@ div.imagedesc{
         </ul>
         <p>Entrambe le rappresentazioni sono valide ed entrambe ottimizzate.Una ci consentirà di evitare l'uso del nostro software, l'altra invece di evitare determinati calcoli, ma entrambe porteranno alla medesima soluzione</p>
         <p>Si lascia agli sviluppatori la libera scelta sull'approccio da usare</p>
-        
+
     <h4>Rappresentazione Delle coordinate dei Punti d'interesse</h4>
     <p>
         Essendo che il nostro servizio debba funzionare in tutte le stanze, oltre a capire come rappresentare esse dobbiamo anche soffermarci su come
