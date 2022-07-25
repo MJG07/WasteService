@@ -194,43 +194,46 @@
 
     <body>
         <div id="top">
-        <h1>Riassunto QActor (meta)model </h1>
+        <h1> QActor (meta)model </h1>
         </div>  
         
-        <h2>I concetti espressi sono un riassunto della teoria espressa in questo link : <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html">QActor (meta)model</a></h2>
+        <h2>Perché il <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html">QActor (meta)model</a>?</h2>
         
         <div class="remark">
             <h2>Introduzione</h2>
             <h3>
-                Il <i> QActor (meta)model</i> è un linguaggio di modellazione per l'analisi e il progetto di applicazioni
+             <p> Il <i> QActor (meta)model</i> è un linguaggio di modellazione per l'analisi e il progetto di applicazioni
                 distribuite e per la definizioni di modelli di comportamento di attori di cui il comportamento sembra
                 quello di una <i> Macchina a Stati Finiti</i>.
-                Nello specifico noi utiliziamo il linguaggio <i> Qak</i> che implementa il linguaggio Kotlin, però senza usare un supporto <i>Akka.</i><br>
-                Qusto linguaggio è definito mediante l'utilizzo del framework <i>Xtext</i> e si basa su un nucleo di concetti che compongono il metamodello.<br>
+            </p> 
                 <img src="img\qacontexts.png" alt="qacontexts"> <br>
-                Questi concetti definiscono un QA-System cioè una collezione di entità, definiti Qactors, che interagiscono tra loro mediante <i>Messaggi (Dispatch, Request...)</i>.
+            <p> 
+                Questo linguaggio di modellazione ci permette di definire i Qactors, che interagiscono tra loro mediante <i>Messaggi (Dispatch, Request...)</i>.
                 Essi possono inviarsi informazioni a vicenda e le operazioni di alto livello mediante i nomi degli attori, e possono cominicare con dispositivi "alieni"
-                mediante protocolli TCP,CoAP, MQTT. <br>
-                Il meta modello è supportata da un qak-infrastructure definita dal project it.unibo.qakactor e inserita nel it.unibo.qakactor-2.7.jar . <br>
-                Definito un sistema con un nome qualsiasi, il Qak Software Factory genera due file <i>.pl</i> il primo con lo stesso nome del sistema genera i descrittori di quest'ultimo;
-                il seondo invece, col nome <i>sysRules.pl</i> serve al QActor-infrastructure per avere conoscenza del sistema.
-                Il concetto di qakactor è implementato dalla classe astratta  ActorBasic.kt, essa la implementa come un entita <i>message-driver</i> che gestisce i messaggi delegando il lavoro a un metodo astratto
+                mediante protocolli TCP,CoAP, MQTT. <br> 
+            </p>  
+            <p> Il concetto di Qactor è implementato dalla classe astratta  ActorBasic.kt, essa la implementa come un entita <i>message-driver</i> che gestisce i messaggi delegando il lavoro a un metodo astratto
                 actorBody. In seguito verra estesa dalla classe ActorBasicFsm.kt, che le fornirà un comportamento di una FSM, essa è designata con gli stessi principi di una FSMKotlin. 
-                L'actorBody supera la message-driven policy utilizzando un metodo fsmwork che implementa un comportamento di una FSM<br>
-                <img src="img\ApplActorBasicFsm.png" alt="ApplActorBasicFsm">  
+                L'actorBody supera la message-driven policy utilizzando un metodo fsmwork che implementa un comportamento di una FSM
+            </p>   
             </h3>
         </div>
 
         <div class="remark">
-            <h2> <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.htmlhtml#messages-and-events">Messages and Events</a> 
-                 and 
-                <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html#high-level-message-operations"> Higt-level message-operations</a>
-            </h2>
+            <h2> Messages and Events</h2>
             <h3>
-              Nel metamodello QActor con messaggio si intende un invie di informazioni in modo asincrono da una sorgente ad un destinatario.
-              Invece per evento si intende un informazione emessa da una sorgente senza che abbia un destinatario specifico. <br>
-              Un messaggio contiene il tipo ApplMessage.kt (<a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html#la-classe-applmessage">guarda ApplMessage</a>),
-              e viene aiutata nel costruire e inviare i messaggi dalla classe : <i>MsgUtil.kt.</i>.
+              Nel metamodello QActor i messaggi vengono inviati in modo asincrono da una sorgente ad un destinatario.
+              Invece per evento viene emessa da una sorgente senza che abbia un destinatario specifico. <br>
+
+              <p>Tipologia di messaggi e eventi:</p>
+              <ul>
+                  <li>Dispatch x : x(_) - utilizzato come si può intuire per inviare informazioni</li>
+                  <li>Request x : x(_) - utilizzato come si può intuire per richiedere informazioni</li>
+                  <li>Reply x : x(_) - utilizzato come si può intuire per inviare informazioni in risposta di una richiesta</li>
+                  <li>Event x : x(_)- utilizzato come si può intuire per inviare informazioni a un destinatario non specifico</li>
+              </ul>
+
+              Un messaggio contiene il tipo ApplMessage.kt e viene aiutata nel costruire e inviare i messaggi dalla classe : <i>MsgUtil.kt.</i>.
               Con il riferimento ad un user-defined QAkactor <i>qa</i> , un tipo di ActorBasicFsm, noi chiamiamo l'insieme di:
               <br>
               <ul>
@@ -294,24 +297,6 @@
                 quando i modelli sono un risultato della analisi del problema e requisiti. In altre situazioni però, non è escluso che sia preferibile introdurre attori 
                 scritti direttamente in Kotlin ed utlizzarli come una sorta di componenti predefiniti in modelli descritti in linguaggio QAk.
             </h3>
-            <h2>
-                <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html#sonar-come-codedqactor">Sonar come CodedQActor</a> 
-            </h2>
-            <h3>
-                Si consideri ad esempio un sistema che deve utilizzare dati prodotti da un sonar ed è quindi logicamente composto da due componenti(sonarDataGen,datahandler).
-                Entrambi questi componenti possono essere modellati come attori che interagiscono tramite eventi.
-                <br>
-                <img src="img\sonarDataGen.png" alt="sonarDataGen">
-                <br>
-                Un modello QAk del sistema può essere espresso come segue: <a href="">SonarQak</a>. In questo modello, 
-                il sonar è introdotto come un CodedQActor di cui si specifica la classe che lo realizza.
-                Un CodedQActor è un attore scritto in Kotlin che è definito come specializzazione di ActorBasic.
-                Il QA-infrastructure gestisce il CodedQActor e "innietta" in esso un contesto specificato dal modello.
-                Nelle fasi preliminari della costruzione di un sistema può essere opportuno introdurre un CodedQActor che realizza la simulazione di un Sonar, 
-                focalizzando l’attenzione sulla informazione emessa come evento.
-                Il modello che esprime la logica di funzionamento del gestore dei dati emessi 
-                dal sonar è un attore che attiva il sonar inviando il dispatch start e poi attende gli eventi.
-            </h3>
             <h2> <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html#qak-un-esempio-piu-articolato">QAk: un esempio più articolato</a> </h2>
 
             <h3> Qui sotto troviamo degli link ad esempi scpericifi di interazioni tra attori e come vengono modellati.
@@ -327,21 +312,21 @@
                         <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html#demorequest-qak">demorequest.qak</a>
                         Un esempio di attere che invia una request a un altro attore locale e poi attende il messaggio di reply che avrà payload called_caller_hello.
                         <br>
-                        <img src="img\demorequest.png" alt="demorequest">
+                        <img src="img\demorequest.png" alt="demorequest" style="width: 40%;">
                         <br>
                     </li>
                     <li>
                         <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html#demorequest-a-qak">demorequest_a.qak</a>
                         Un esempio di due attori che inviano richieste dello stesso tipo, ma con payload diverso ad un terzo attore, il quale invia la risposta all’attore chiamante.
                         <br>
-                        <img src="img\demorequest_a.png" alt="demorequest_a">
+                        <img src="img\demorequest_a.png" alt="demorequest_a" style="width: 40%;">
                         <br>
                     </li>
                     <li>
                         <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html#demorequest-a-distribuito">demorequest_a distribuito</a>
                         Un esempio di modello ad attori distribuito, quindi vi è almeno un attore che non appartiene ad allo stesso contesto.
                         <br>
-                        <img src="img\demorequest_aDistr1.png" alt="demorequest_aDistr1">
+                        <img src="img\demorequest_aDistr1.png" alt="demorequest_aDistr1 " style="width: 40%;">
                         <br>
                     </li>
                 </ul>
@@ -362,27 +347,6 @@
                 <img src="img\corecaller.png" alt="corecaller">
                 <br>
                 Ma per poter interagire deve conoscere il linguaggio di interazione cioè il protocollo utilizato per ricevere messaggi.
-            </h3>
-            <h2>
-                <a href=http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html#actors-as-streams">Actors as streams</a>
-            </h2>
-            <h3>
-                <a href="https://en.wikipedia.org/wiki/Reactive_programming">Reactive programming </a> è una combinazione della migliore idea di  Observer pattern, the Iterator pattern, e Functional programming.
-                In Reactive programming, un consumatore reagisce ai dati non appena arrivano, con la capacità anche di propagare le modifiche come eventi agli osservatori registrati.
-                Un QAkActor può lavorare come un produttore osservabile di dati; può essere osservato da altri attori che si colllegano presso di lui. Ciascun sottoscrittore elaborerà i dati ‘in parallelo’ 
-                con gli altri e potrà a sua volta funzionare come osservabile.
-            </h3>
-            <h2>
-                <a href="http://htmlpreview.github.io/?https://github.com/anatali/issLab2022/blob/main/it.unibo.issLabStart/userDocs/Dispense/lezioni/html/QakIntro.html#creazione-di-una-pipe">Creazione di una pipe</a>
-            </h2>
-            <h3>
-                <br>
-                <img src="img\sonarpipenano.png" alt="sonarpipenano">
-                <br>
-                In figura si vede un sitema che configura una pipe. I dati generati da <i>firstActorInPipe </i> 
-                sono memorizzati dal <i>datalogger</i> , filtrati dal <i>datacleaner</i>  e gestiti dal <i>distancefilter</i> , 
-                che emette l’evento <i>obstacle:obstacle(V)</i>  nel caso che il valore corrente della distanza 
-                misurata risulti inferiore a un limite prefissato.
             </h3>
         </div>
     </body>
